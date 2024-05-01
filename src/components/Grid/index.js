@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Header } from "../Navbar";
+import { Link } from "react-router-dom";
 
-export function Grid() {
+export const Grid = () => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
@@ -11,18 +13,22 @@ export function Grid() {
   }, []);
 
   return (
-    <div>
-      <h1>Movies LowCost</h1>
-      {items.map(({ id, title, description, price, stock, genre, src }) => (
-        <div key={id}>
-          <h2>{title}</h2>
-          <p>{description}</p>
-          <p>Price: {price}</p>
-          <p>Stock: {stock}</p>
-          <p>Genre: {genre}</p>
-          <img src={src} alt={title} />
-        </div>
-      ))}
-    </div>
+    <>
+      <Header />
+      <div>
+        <h1>Movies LowCost</h1>
+        {items.map((item) => (
+          <div key={item.id}>
+            <Link to={`/item/${item.id}`}>
+              <h2>{item.title}</h2>
+            </Link>
+            <p>{item.description}</p>
+            <p>Price: {item.price}</p>
+            <p>Genre: {item.genre}</p>
+            <img src={item.src} alt={item.title} height={300} />
+          </div>
+        ))}
+      </div>
+    </>
   );
-}
+};
