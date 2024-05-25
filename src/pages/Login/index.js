@@ -2,15 +2,16 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { Button, Form, Spinner } from "react-bootstrap";
 import { auth } from "../../firebase";
 import axios from "axios";
-import { useContext, useState } from "react";
-import { AuthContext } from "../../context/authContext"; // Importa el contexto de autenticación
+import { useEffect, useState } from "react";
+// Importa el contexto de autenticación
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./../../context/userContext";
 
 export const Login = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(""); // Estado para el mensaje de bienvenida
   const [error, setError] = useState(""); // Estado para el mensaje de error
-  const { setUser } = useContext(AuthContext); // Obtiene la función setUser del contexto de autenticación
+  const { authState, setAuthState } = useAuth(); // Obtiene la función setUser del contexto de autenticación
   const navigate = useNavigate(); // Obtiene la función de navegación
 
   const firebaseLogin = async (e) => {
@@ -36,16 +37,16 @@ export const Login = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-
+      // console.log(response);
       // Actualiza el contexto de autenticación con los datos del usuario recibidos del backend
-      setUser(response.data.user);
+      setAuthState(response.data.user);
 
       // Muestra el mensaje de bienvenida con el nombre de usuario
       setMessage("¡Bienvenido!");
 
       // Redirige al usuario a la página principal después del inicio de sesión exitoso
-      navigate("/");
-      navigate(0);
+      // navigate("/");
+      // navigate(0);
     } catch (error) {
       console.error(error.message);
       // Muestra el mensaje de error en caso de falla de inicio de sesión
@@ -54,6 +55,12 @@ export const Login = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (authState) {
+      navigate("/");
+    }
+  }, [authState]);
 
   return (
     <div>

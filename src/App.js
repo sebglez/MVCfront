@@ -1,20 +1,21 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { Main } from "./pages/Main";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Main from "./pages/Main";
 import { ROUTES } from "./constants";
 import { Login } from "./pages/Login";
-import { Signup } from "./pages/SignUp"; // Cambié SingUp a SignUp para que coincida con el nombre del archivo
+import { Signup } from "./pages/SignUp";
 import { Products } from "./pages/Dashboard/products";
 import { Users } from "./pages/Dashboard/users";
 import { Sidebar } from "./components/Sidebar";
 import AddProduct from "./components/Form/addProduct";
 import { EditProduct } from "./components/Form/editProduct";
-import { Product } from "./pages/Product/product";
+import Product from "./pages/Product/product";
 import { User } from "./pages/User/user";
-import { Profile } from "./pages/Profile/profile";
-import { Header } from "./components/Navbar"; // Importa el componente Header
+import Profile from "./pages/Profile/profile";
+import EditProfile from "./components/Form/editProfile";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { ShoppingProvider } from "../src/context/shoppingContext"; // Importa el ShoppingProvider
 import { auth } from "./firebase";
-import { EditProfile } from "./components/Form/editProfile";
 
 export const App = () => {
   const [userId, setUserId] = useState(null);
@@ -63,8 +64,8 @@ export const App = () => {
   ]);
 
   return (
-    <RouterProvider router={router}>
-      <Header userId={userId} />
-    </RouterProvider>
+    <ShoppingProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </ShoppingProvider>
   );
 };

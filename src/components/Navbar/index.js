@@ -2,20 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { NavButton } from "../Buttons/buttons";
 import { ROUTES } from "../../constants";
-
 import { auth } from "../../firebase";
-import axios from "axios";
+import { useAuth } from "../../context/userContext";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
+import { useShoppingContext } from "../../context/shoppingContext";
 
 export const Header = () => {
   const [user, setUser] = useState(null);
-  const [users, setUsers] = useState([]);
-
-  // Llama a getUsers cuando el componente se monta
-  useEffect(() => {
-    axios.get("http://localhost:3001/user").then(({ data }) => {
-      setUsers(data.users);
-    });
-  }, []);
+  const { authState, setAuthState } = useAuth();
+  const { cart, removeFromCart, clearCart } = useShoppingContext();
+  const [showCart, setShowCart] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -29,33 +27,90 @@ export const Header = () => {
     auth
       .signOut()
       .then(() => {
-        // Se ejecuta cuando el usuario cierra sesión correctamente
+        setAuthState(null);
         console.log("Usuario cerró sesión correctamente");
       })
       .catch((error) => {
-        // Manejar errores si ocurrieron durante el cierre de sesión
         console.error("Error al cerrar sesión:", error);
       });
   };
 
+  const toggleCart = () => {
+    setShowCart(!showCart);
+  };
+
+  // Calculate total price of items in the cart
+  const totalPrice = cart
+    .reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0)
+    .toFixed(2);
+
   return (
     <div>
-      {!user && (
+      {!user ? (
         <>
+          <Link to={ROUTES.HOME.ROUTE}>
+            <Button>Home</Button>
+          </Link>
           <Link to={ROUTES.LOGIN.ROUTE}>
             <NavButton buttonName="Login" />
           </Link>
           <Link to={ROUTES.SIGNUP.ROUTE}>
             <NavButton buttonName="Signup" />
           </Link>
+          <FontAwesomeIcon
+            icon={faCartShopping}
+            size="xl"
+            onClick={toggleCart}
+          />
         </>
-      )}
-      {user && (
-        <>
-          <Link to={`http://localhost:3000/profile`}>PROFILE</Link>
-
+      ) : (
+        <div>
+          <Link to={ROUTES.HOME.ROUTE}>
+            <Button>Home</Button>
+          </Link>
+          {authState &&
+            (authState.role === "employee" || authState.role === "admin") && (
+              <Link to={ROUTES.DASHBOARD.ROUTE}>
+                <NavButton buttonName="Dashboard" />
+              </Link>
+            )}
+          <Link to="/profile">
+            <Button>Profile</Button>
+          </Link>
           <NavButton buttonName="Logout" onClick={logOut} />
-        </>
+          <FontAwesomeIcon
+            icon={faCartShopping}
+            size="xl"
+            onClick={toggleCart}
+          />
+        </div>
+      )}
+      {showCart && (
+        <div className="cart-content">
+          <h6>Cart Items</h6>
+          <ListGroup variant="flush">
+            {cart.map((item) => (
+              <ListGroupItem key={item.id}>
+                {item.title} - {item.price}€ x {item.quantity}
+                <FontAwesomeIcon
+                  icon={faCartShopping}
+                  size="sm"
+                  onClick={() => removeFromCart(item.id)}
+                  style={{ cursor: "pointer", marginLeft: "10px" }}
+                />
+              </ListGroupItem>
+            ))}
+            <ListGroupItem>
+              <strong>Total: {totalPrice}€</strong>
+            </ListGroupItem>
+          </ListGroup>
+          <Button onClick={clearCart} variant="danger">
+            Clear Cart
+          </Button>
+          <Link to="/checkout">
+            <Button>Comprar</Button>
+          </Link>
+        </div>
       )}
     </div>
   );

@@ -1,24 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { ROUTES } from "../../constants";
+import { Products } from "../../pages/Dashboard/products";
+import { Users } from "../../pages/Dashboard/users";
 
 export const Sidebar = () => {
+  const [activeComponent, setActiveComponent] = useState(null);
+
+  const renderComponent = () => {
+    switch (activeComponent) {
+      case "users":
+        return <Users />;
+      case "products":
+        return <Products />;
+      case "close":
+        return "";
+      default:
+    }
+  };
+
   return (
     <aside>
+      <Button onClick={() => setActiveComponent("close")}>Close List</Button>
       <ul>
         <li>
-          <Link to={ROUTES.USERS.ROUTE}>
-            <Button>Users</Button>
-          </Link>
+          <Button onClick={() => setActiveComponent("users")}>Users</Button>
         </li>
         <li>
-          <Link to={ROUTES.PRODUCTS.ROUTE}>
-            {" "}
-            <Button>Products</Button>
-          </Link>
+          <Button onClick={() => setActiveComponent("products")}>
+            Products
+          </Button>
         </li>
       </ul>
+      <div>{renderComponent()}</div>
     </aside>
   );
 };

@@ -1,5 +1,8 @@
 import { Grid } from "../../components/Grid/index";
+import withHeader from "../../hoc/withHeader";
 
-export function Main() {
+function Main() {
   return <Grid></Grid>;
 }
+
+export default withHeader(Main);

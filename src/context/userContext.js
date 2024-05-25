@@ -9,10 +9,7 @@ import axios from "axios";
 
 // Definir el estado inicial para los usuarios y la autenticación
 const initialUsersState = [];
-const initialAuthState = {
-  user: null,
-  loading: true,
-};
+const initialAuthState = null;
 
 // Crear contextos separados para usuarios y autenticación
 const UsersContext = createContext(initialUsersState);

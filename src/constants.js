@@ -10,4 +10,5 @@ export const ROUTES = {
   GETUSER: { ROUTE: "/dashboard/users/:id", NAME: "Get User" },
   PROFILE: { ROUTE: "/profile", NAME: "Profile" },
   EDITPROFILE: { ROUTE: "/editprofile/:id", NAME: "Edit Profile" },
+  HOME: { ROUTE: "/", Name: "Home" },
 };

@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useContextItems } from "../../context/itemContext";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import withHeader from "../../hoc/withHeader";
 
-export const Product = () => {
+const Product = () => {
   const { id } = useParams(); // Make sure 'id' is extracted correctly
   const { getItem } = useContextItems();
   const [item, setItem] = useState(null);
@@ -32,3 +33,5 @@ export const Product = () => {
     </div>
   );
 };
+
+export default withHeader(Product);

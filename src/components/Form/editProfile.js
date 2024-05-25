@@ -2,16 +2,24 @@ import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export const EditProfile = () => {
+import { useAuth } from "./../../context/userContext";
+import withHeader from "../../hoc/withHeader";
+
+const EditProfile = () => {
   const { id } = useParams();
   const [userValue, setUserValue] = useState({});
   const navigate = useNavigate();
+  const { authState } = useAuth();
+  console.log(authState);
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3001/user/profile/${id}`
+          `http://localhost:3001/user/profile/${id}`,
+          {
+            headers: { Authorization: `Bearer ${authState.token}` },
+          }
         );
         setUserValue(response.data.user);
       } catch (error) {
@@ -32,7 +40,7 @@ export const EditProfile = () => {
 
     try {
       await axios.patch(`http://localhost:3001/user/profile/${id}`, userValue);
-      navigate(`/user/${id}`);
+      navigate(`/profile`);
     } catch (error) {
       console.error("Error saving changes:", error);
     }
@@ -72,3 +80,5 @@ export const EditProfile = () => {
     </div>
   );
 };
+
+export default withHeader(EditProfile);
