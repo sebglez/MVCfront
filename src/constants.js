@@ -11,4 +11,5 @@ export const ROUTES = {
   PROFILE: { ROUTE: "/profile", NAME: "Profile" },
   EDITPROFILE: { ROUTE: "/editprofile/:id", NAME: "Edit Profile" },
   HOME: { ROUTE: "/", Name: "Home" },
+  PURCHASE: { ROUTE: "/purchase", Name: "Purchase" },
 };

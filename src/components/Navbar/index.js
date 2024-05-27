@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { NavButton } from "../Buttons/buttons";
 import { ROUTES } from "../../constants";
 import { auth } from "../../firebase";
@@ -14,6 +14,7 @@ export const Header = () => {
   const { authState, setAuthState } = useAuth();
   const { cart, removeFromCart, clearCart } = useShoppingContext();
   const [showCart, setShowCart] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -44,6 +45,8 @@ export const Header = () => {
     .reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0)
     .toFixed(2);
 
+  const purchasePage = location.pathname === ROUTES.PURCHASE.ROUTE;
+
   return (
     <div>
       {!user ? (
@@ -57,11 +60,13 @@ export const Header = () => {
           <Link to={ROUTES.SIGNUP.ROUTE}>
             <NavButton buttonName="Signup" />
           </Link>
-          <FontAwesomeIcon
-            icon={faCartShopping}
-            size="xl"
-            onClick={toggleCart}
-          />
+          {!purchasePage && (
+            <FontAwesomeIcon
+              icon={faCartShopping}
+              size="xl"
+              onClick={toggleCart}
+            />
+          )}
         </>
       ) : (
         <div>
@@ -78,11 +83,13 @@ export const Header = () => {
             <Button>Profile</Button>
           </Link>
           <NavButton buttonName="Logout" onClick={logOut} />
-          <FontAwesomeIcon
-            icon={faCartShopping}
-            size="xl"
-            onClick={toggleCart}
-          />
+          {!purchasePage && (
+            <FontAwesomeIcon
+              icon={faCartShopping}
+              size="xl"
+              onClick={toggleCart}
+            />
+          )}
         </div>
       )}
       {showCart && (
@@ -107,7 +114,7 @@ export const Header = () => {
           <Button onClick={clearCart} variant="danger">
             Clear Cart
           </Button>
-          <Link to="/checkout">
+          <Link to={ROUTES.PURCHASE.ROUTE}>
             <Button>Comprar</Button>
           </Link>
         </div>

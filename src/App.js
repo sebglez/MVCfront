@@ -16,6 +16,7 @@ import EditProfile from "./components/Form/editProfile";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { ShoppingProvider } from "../src/context/shoppingContext"; // Importa el ShoppingProvider
 import { auth } from "./firebase";
+import Purchase from "./pages/Purchase";
 
 export const App = () => {
   const [userId, setUserId] = useState(null);
@@ -60,6 +61,10 @@ export const App = () => {
     {
       path: ROUTES.EDITPROFILE.ROUTE,
       element: <EditProfile />,
+    },
+    {
+      path: ROUTES.PURCHASE.ROUTE,
+      element: <Purchase />,
     },
   ]);
 
