@@ -32,6 +32,9 @@ function itemsReducer(state, action) {
       };
       return [...state, newItem];
 
+    case "SEARCH_QUERY":
+      return { ...state, searchQuery: action.payload };
+
     case "EDIT_ITEM":
       const updatedItem = action.payload; // El ítem actualizado recibido del servidor
       const updatedStateItems = state.map((item) =>
@@ -130,7 +133,19 @@ function ContextProvider({ children }) {
     }
   };
 
-  const value = { items, getItems, addItem, deleteItem, editItem, getItem };
+  const searchQuery = (query) => {
+    dispatch({ type: "SET_SEARCH_QUERY", payload: query });
+  };
+
+  const value = {
+    items,
+    getItems,
+    addItem,
+    deleteItem,
+    editItem,
+    getItem,
+    searchQuery,
+  };
   return (
     <ItemsContext.Provider value={value}>{children}</ItemsContext.Provider>
   );

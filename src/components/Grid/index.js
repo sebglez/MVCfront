@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useShoppingContext } from "../../context/shoppingContext";
+import styles from "./index.module.scss";
 
 export const Grid = () => {
   const [items, setItems] = useState([]);
@@ -46,15 +47,14 @@ export const Grid = () => {
   };
 
   return (
-    <div>
-      <h1>Movies LowCost</h1>
+    <div className={styles.moviesGrid}>
       {items.map((item) => (
         <div key={item.id}>
           <Link to={`/item/${item.id}`}>
             <h2>{item.title}</h2>
           </Link>
           <img src={item.src} alt={item.title} height={300} />
-          <p>{item.description}</p>
+
           <p>Price: {item.price}€</p>
           <p>Genre: {item.genre}</p>
           <div>

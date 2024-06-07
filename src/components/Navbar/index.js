@@ -8,12 +8,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useShoppingContext } from "../../context/shoppingContext";
-
+import { SearchBar } from "../Search";
 export const Header = () => {
   const [user, setUser] = useState(null);
   const { authState, setAuthState } = useAuth();
   const { cart, removeFromCart, clearCart } = useShoppingContext();
   const [showCart, setShowCart] = useState(false);
+
   const location = useLocation();
 
   useEffect(() => {
@@ -52,8 +53,9 @@ export const Header = () => {
       {!user ? (
         <>
           <Link to={ROUTES.HOME.ROUTE}>
-            <Button>Home</Button>
+            <h4>Movies LowCost</h4>
           </Link>
+          <SearchBar />
           <Link to={ROUTES.LOGIN.ROUTE}>
             <NavButton buttonName="Login" />
           </Link>
@@ -71,8 +73,9 @@ export const Header = () => {
       ) : (
         <div>
           <Link to={ROUTES.HOME.ROUTE}>
-            <Button>Home</Button>
+            <h4>Movies LowCost</h4>
           </Link>
+          <SearchBar />
           {authState &&
             (authState.role === "employee" || authState.role === "admin") && (
               <Link to={ROUTES.DASHBOARD.ROUTE}>
