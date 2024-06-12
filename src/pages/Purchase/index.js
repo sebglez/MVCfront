@@ -64,10 +64,10 @@ function Purchase() {
           <strong>Total: {totalPrice}€</strong>
         </ListGroupItem>
         <Button variant="danger" onClick={handleKeepBuying}>
-          KEEP BUYING
+          CONTINUE BUYING
         </Button>
         <Button variant="success" onClick={handleShow}>
-          BUY
+          CHECKOUT
         </Button>
       </ListGroup>
 
@@ -114,10 +114,10 @@ function Purchase() {
             </Form.Group>
             <p>Complete Purchase For {totalPrice}€</p>
             <Button variant="primary" type="submit">
-              BUY NOW
+              CHECKOUT NOW
             </Button>{" "}
             <Button variant="secondary" onClick={handleClose}>
-              Cancel
+              CANCEL
             </Button>
           </Form>
         </Modal.Body>

@@ -1,0 +1,77 @@
+.searchNavBox {
+  position: relative; /* Asegura que el contenedor de resultados se posicione relativo a este contenedor */
+  width: 600px; /* Ajusta según tus necesidades */
+  height: 50px;
+}
+
+.searchNavBox input {
+  display: flex;
+
+  padding: 10px;
+  width: 400px;
+  border: 1px solid rgb(224, 221, 221);
+  outline: none;
+}
+
+.searchNavBox input::placeholder {
+  font-size: 17.5px;
+}
+
+.resultsContainer {
+  position: absolute;
+  top: calc(100% - 2px);
+
+  width: 400px;
+  z-index: 1000;
+  background-color: #fff;
+  box-shadow: 0px 6px 6px rgba(0, 0.1, 0.1, 0.1);
+  border: 1px solid #ccc; /* Añade borde */
+  border-radius: 0, 5px, 5px, 5px;
+  padding: 10px;
+  max-height: 300px;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+.searchDataBox {
+  display: flex;
+  width: 380px;
+  grid-gap: 10px;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.searchData {
+  display: flex;
+  margin-top: -5px;
+  align-items: center;
+  width: 380px;
+}
+.searchData:hover {
+  background-color: #faf7f7;
+}
+.searchDataBox:last-child {
+  border-bottom: none;
+}
+.searchBoxImg {
+  margin-right: 5%;
+}
+
+.searchBoxImg img {
+  max-width: 100px;
+  border-radius: 5px;
+}
+
+.textContainer {
+  display: flex;
+  align-items: center;
+}
+
+.textContainer .title {
+  margin-right: 100px;
+  white-space: nowrap;
+}
+
+.searchDataBox p {
+  margin: 5px 0;
+}

@@ -9,6 +9,10 @@ import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useShoppingContext } from "../../context/shoppingContext";
 import { SearchBar } from "../Search";
+import styles from "./index.module.scss";
+import logonavbar from "../../img/logo.png";
+import filmcloud from "../../img/filmcloud2.png";
+
 export const Header = () => {
   const [user, setUser] = useState(null);
   const { authState, setAuthState } = useAuth();
@@ -49,26 +53,50 @@ export const Header = () => {
   const purchasePage = location.pathname === ROUTES.PURCHASE.ROUTE;
 
   return (
-    <div>
+    <div className={styles.navBar}>
       {!user ? (
         <>
           <Link to={ROUTES.HOME.ROUTE}>
-            <h4>Movies LowCost</h4>
-          </Link>
-          <SearchBar />
-          <Link to={ROUTES.LOGIN.ROUTE}>
-            <NavButton buttonName="Login" />
-          </Link>
-          <Link to={ROUTES.SIGNUP.ROUTE}>
-            <NavButton buttonName="Signup" />
-          </Link>
-          {!purchasePage && (
-            <FontAwesomeIcon
-              icon={faCartShopping}
-              size="xl"
-              onClick={toggleCart}
+            <img
+              src={filmcloud}
+              alt="logo"
+              className={styles.logo}
+              height={80}
             />
-          )}
+          </Link>
+
+          <ul>
+            <div className={styles.searchBox}>
+              <li>
+                {" "}
+                <SearchBar />
+              </li>
+            </div>
+
+            <div className={styles.buttons}>
+              <li>
+                <Link to={ROUTES.LOGIN.ROUTE}>
+                  <NavButton buttonName="Login" />
+                </Link>
+              </li>
+              <li>
+                <Link to={ROUTES.SIGNUP.ROUTE}>
+                  <NavButton buttonName="Signup" />
+                </Link>
+              </li>
+              {!purchasePage && (
+                <li>
+                  <FontAwesomeIcon
+                    icon={faCartShopping}
+                    size="2xl"
+                    onClick={toggleCart}
+                    className={styles.cart}
+                    style={{ color: "#840fe4" }}
+                  />
+                </li>
+              )}
+            </div>
+          </ul>
         </>
       ) : (
         <div>
@@ -96,7 +124,7 @@ export const Header = () => {
         </div>
       )}
       {showCart && (
-        <div className="cart-content">
+        <div className={styles.cart}>
           <h6>Cart Items</h6>
           <ListGroup variant="flush">
             {cart.map((item) => (

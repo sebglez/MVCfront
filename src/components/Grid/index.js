@@ -1,9 +1,6 @@
-// Grid.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { useShoppingContext } from "../../context/shoppingContext";
 import styles from "./index.module.scss";
 
@@ -49,37 +46,41 @@ export const Grid = () => {
   return (
     <div className={styles.moviesGrid}>
       {items.map((item) => (
-        <div key={item.id}>
-          <Link to={`/item/${item.id}`}>
-            <h2>{item.title}</h2>
-          </Link>
-          <img src={item.src} alt={item.title} height={300} />
+        <div className={styles.movieTarget}>
+          <div key={item.id}>
+            <Link to={`/item/${item.id}`} style={{ textDecoration: "none" }}>
+              <img src={item.src} alt={item.title} className={styles.gridImg} />{" "}
+              <p className={styles.title}>{item.title}</p>
+            </Link>
+            <p className={styles.genre}>{item.genre}</p>
+            <div className={styles.selectPrice}>
+              <select
+                value={itemCounts[item.id]}
+                onChange={(e) =>
+                  handleCountChange(item.id, parseInt(e.target.value))
+                }
+              >
+                {Array.from({ length: item.stock }, (_, i) => i + 1).map(
+                  (count) => (
+                    <option key={count} value={count}>
+                      {count}
+                    </option>
+                  )
+                )}
+              </select>
 
-          <p>Price: {item.price}€</p>
-          <p>Genre: {item.genre}</p>
-          <div>
-            <select
-              value={itemCounts[item.id]}
-              onChange={(e) =>
-                handleCountChange(item.id, parseInt(e.target.value))
-              }
+              <div className={styles.moviePrice}>
+                {" "}
+                <strong>{item.price}€</strong>
+              </div>
+            </div>
+            <button
+              className={styles.addToCart}
+              onClick={() => handleAddToCart(item)}
             >
-              {Array.from({ length: item.stock }, (_, i) => i + 1).map(
-                (count) => (
-                  <option key={count} value={count}>
-                    {count}
-                  </option>
-                )
-              )}
-            </select>
+              Add to Cart
+            </button>
           </div>
-          <FontAwesomeIcon
-            icon={faCartShopping}
-            beatFade
-            size="xl"
-            onClick={() => handleAddToCart(item)}
-            style={{ cursor: "pointer", marginLeft: "10px" }}
-          />
         </div>
       ))}
     </div>

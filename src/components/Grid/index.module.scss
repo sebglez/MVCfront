@@ -1,13 +1,84 @@
 .moviesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 230px);
-  gap: 40px;
-  padding: 40px;
+  grid-template-columns: repeat(auto-fill, 300px);
+  gap: 30px;
+  padding: 45px;
   justify-content: center;
+  align-items: center;
 }
 
 @media (max-width: 560px) {
   .moviesGrid {
     grid-template-columns: 100%;
   }
+}
+
+.gridImg {
+  height: 250px;
+  width: 180px;
+}
+
+.title {
+  margin-top: 10px;
+  padding: 1%;
+  color: Black;
+  font-size: 18px;
+}
+
+.movieTarget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 5%;
+  font-size: 15px;
+  color: grey;
+  border: 1px solid rgb(218, 213, 213);
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.movieTarget:hover {
+  border: 1px solid rgb(132, 15, 228);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.movieTarget > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.selectPrice {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  align-items: center;
+}
+
+.moviePrice {
+  font-size: 18px;
+  color: rgb(132, 15, 228);
+}
+
+.addToCart {
+  border: none;
+  background-color: rgb(132, 15, 228);
+  padding: 8px;
+  width: 150px;
+  height: max-content;
+  color: white;
+  font-family: sans-serif;
+  margin: 10px 50px;
+}
+
+.addToCart:hover {
+  background-color: hsl(273, 82%, 67%);
+}
+
+.genre {
+  font-weight: bold;
+  color: rgb(190, 188, 188);
 }

@@ -1,10 +1,53 @@
 .navBar {
   display: flex;
-
   width: 100%;
+  align-items: center;
+
+  background-color: #fff;
+  padding: 2px 6.5%;
+  border-bottom: 1px solid rgb(132, 15, 228);
+}
+
+.logo {
+  cursor: pointer;
+  margin-left: 80px;
+}
+
+ul {
+  margin-left: 350px;
+  display: flex;
+  flex: 1;
+  align-content: center;
+  list-style: none;
+  text-align: center;
+  background-color: #fff;
   justify-content: space-around;
-  padding: 30px;
-  border: 1px grey;
-  color: black;
-  gap: 50%;
+}
+
+ul li {
+  display: inline-block;
+
+  margin: 3px 8px;
+  font-size: 18px;
+  background-color: #fff;
+}
+
+.cart {
+  background-color: #fff;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 10px;
+  justify-content: center;
+  background-color: #fff;
+  align-items: center;
+  align-content: center;
+  margin-right: 100px;
+}
+
+.searchBox {
+  margin-top: 15px;
+  margin-right: 200px;
+  padding: 10px;
 }
