@@ -1,11 +1,14 @@
+$base-color: #840fe4;
+
 .navBar {
   display: flex;
-  width: 100%;
   align-items: center;
-
+  width: 100%;
+  padding: 10px 6.5%;
   background-color: #fff;
-  padding: 2px 6.5%;
-  border-bottom: 1px solid rgb(132, 15, 228);
+  border-bottom: 1px solid $base-color;
+  position: relative;
+  z-index: 10;
 }
 
 .logo {
@@ -14,40 +17,144 @@
 }
 
 ul {
-  margin-left: 350px;
   display: flex;
   flex: 1;
-  align-content: center;
+  align-items: center;
   list-style: none;
-  text-align: center;
-  background-color: #fff;
   justify-content: space-around;
+  margin: 0;
+  padding: 0;
 }
 
-ul li {
-  display: inline-block;
-
-  margin: 3px 8px;
-  font-size: 18px;
-  background-color: #fff;
-}
-
-.cart {
-  background-color: #fff;
+.searchBox {
+  margin-left: 350px;
+  padding: 10px;
 }
 
 .buttons {
   display: flex;
-  margin-top: 10px;
-  justify-content: center;
-  background-color: #fff;
   align-items: center;
-  align-content: center;
+  margin-left: auto;
   margin-right: 100px;
 }
 
-.searchBox {
-  margin-top: 15px;
-  margin-right: 200px;
+ul li {
+  display: inline-block;
+  margin: 3px 8px;
+  font-size: 18px;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column; /* Cambiamos a flex-direction: column */
+  align-items: center; /* Centramos verticalmente */
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   padding: 10px;
+  position: absolute;
+  top: 80px;
+  right: 100px;
+  width: 320px; /* Aumentamos el ancho del contenedor */
+  background-color: #fff;
+  box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ccc;
+  z-index: 1000;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    right: 138px;
+    height: 0;
+    border-left: 10px solid white;
+    border-right: 10px solid white;
+    border-bottom: 10px solid #ccc;
+  }
+}
+
+.ulCart {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Ajustamos la alineación a flex-start */
+  width: 100%;
+  padding: 0; /* Eliminamos el padding para maximizar el espacio horizontal */
+  margin: 10px 0; /* Margen superior e inferior */
+  border-bottom: 1px solid #410077; /* Línea de separación */
+}
+
+.liCart {
+  display: flex;
+  font-size: 16px;
+  color: #410077;
+  list-style-type: none;
+  align-items: center;
+  padding: 10px;
+  width: 100%; /* Asegura que cada elemento ocupe todo el ancho disponible */
+}
+
+.cartItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.cartImg {
+  margin-right: 10px;
+  flex: none;
+}
+
+.cartDetails {
+  flex: 1;
+}
+
+.cartTitle {
+  font-weight: bold;
+}
+
+.cartSubDetails {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.cartQuantity,
+.cartItemPrice,
+.cartTotalPrice {
+  display: flex;
+  justify-content: center;
+  margin-right: 10px;
+  font-weight: bolder;
+  color: #410077;
+  white-space: nowrap; /* Evita el salto de línea */
+}
+
+.cartButtons {
+  display: flex;
+
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px; /* Espacio entre el contenido y los botones */
+}
+
+.purchaseButton {
+  width: 100%;
+  padding: 10px;
+  /* Espacio entre los botones */
+}
+
+.purchaseButton {
+  background-color: #840fe4;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.clearButton {
+  background-color: hsl(271, 56%, 76%);
+  width: 100%;
+  height: 30px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
 }

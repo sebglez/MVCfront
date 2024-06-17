@@ -5,7 +5,7 @@ import { ROUTES } from "../../constants";
 import { auth } from "../../firebase";
 import { useAuth } from "../../context/userContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faCartShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Button, ListGroup, ListGroupItem } from "react-bootstrap";
 import { useShoppingContext } from "../../context/shoppingContext";
 import { SearchBar } from "../Search";
@@ -45,7 +45,6 @@ export const Header = () => {
     setShowCart(!showCart);
   };
 
-  // Calculate total price of items in the cart
   const totalPrice = cart
     .reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0)
     .toFixed(2);
@@ -68,7 +67,6 @@ export const Header = () => {
           <ul>
             <div className={styles.searchBox}>
               <li>
-                {" "}
                 <SearchBar />
               </li>
             </div>
@@ -90,7 +88,6 @@ export const Header = () => {
                     icon={faCartShopping}
                     size="2xl"
                     onClick={toggleCart}
-                    className={styles.cart}
                     style={{ color: "#840fe4" }}
                   />
                 </li>
@@ -125,29 +122,49 @@ export const Header = () => {
       )}
       {showCart && (
         <div className={styles.cart}>
-          <h6>Cart Items</h6>
-          <ListGroup variant="flush">
-            {cart.map((item) => (
-              <ListGroupItem key={item.id}>
-                {item.title} - {item.price}€ x {item.quantity}
-                <FontAwesomeIcon
-                  icon={faCartShopping}
-                  size="sm"
-                  onClick={() => removeFromCart(item.id)}
-                  style={{ cursor: "pointer", marginLeft: "10px" }}
-                />
+          <div className={styles.cartData}>
+            <ListGroup variant="flush">
+              {cart.map((item) => (
+                <ul key={item.id} className={styles.ulCart}>
+                  <li className={styles.liCart}>
+                    <div className={styles.cartItem}>
+                      <div className={styles.cartImg}>
+                        <img src={item.src} alt={item.title} height={50} />
+                      </div>
+                      <div className={styles.cartDetails}>
+                        <span className={styles.cartTitle}>{item.title}</span>
+                        <div className={styles.cartSubDetails}>
+                          <span className={styles.cartQuantity}>
+                            Qty: {item.quantity}
+                          </span>
+                          <span className={styles.cartItemPrice}>
+                            {item.price}€
+                          </span>
+                          <FontAwesomeIcon
+                            icon={faTrash}
+                            size="sm"
+                            onClick={() => removeFromCart(item.id)}
+                            style={{ cursor: "pointer", marginLeft: "10px" }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              ))}
+              <ListGroupItem>
+                <p className={styles.cartTotalPrice}>Total: {totalPrice}€</p>
               </ListGroupItem>
-            ))}
-            <ListGroupItem>
-              <strong>Total: {totalPrice}€</strong>
-            </ListGroupItem>
-          </ListGroup>
-          <Button onClick={clearCart} variant="danger">
-            Clear Cart
-          </Button>
-          <Link to={ROUTES.PURCHASE.ROUTE}>
-            <Button>Comprar</Button>
-          </Link>
+            </ListGroup>
+            <Link to={ROUTES.PURCHASE.ROUTE}>
+              <button className={styles.purchaseButton}>Buy Now</button>
+            </Link>
+            <div className={styles.cartButtons}>
+              <button onClick={clearCart} className={styles.clearButton}>
+                Clear Cart
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
